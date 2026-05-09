@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`queryOptions with keyPrefix: undefined > iterable 1`] = `
+[
+  {
+    "data": undefined,
+    "fetchStatus": "fetching",
+    "status": "pending",
+  },
+]
+`;
+
+exports[`queryOptions with keyPrefix: user-123 > iterable 1`] = `
+[
+  {
+    "data": undefined,
+    "fetchStatus": "fetching",
+    "status": "pending",
+  },
+]
+`;
