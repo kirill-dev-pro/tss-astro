@@ -1,6 +1,6 @@
 import z from 'zod'
 
-import { publicProcedure, router } from '../router'
+import { publicProcedure, router } from '../init'
 
 const NAME_LIST = [
   'Katt',
@@ -37,7 +37,12 @@ export const appRouter = router({
     .input(z.object({ name: z.string() }))
     .mutation(async ({ input }) => {
       await new Promise((resolve) => setTimeout(resolve, 1000))
-      return { id: '1', name: input.name }
+      return {
+        id: '1',
+        name: input.name,
+        today: new Date(),
+        map: { path: { val: { key: true } } },
+      }
     }),
 })
 

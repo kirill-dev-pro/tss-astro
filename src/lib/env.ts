@@ -13,6 +13,7 @@ export const env = createEnv({
   clientPrefix: 'VITE_',
 
   shared: {
+    VITE_DEV: z.boolean().optional().default(false),
     VITE_SERVER_URL: z.url().optional().default('http://localhost:4321'),
   },
 

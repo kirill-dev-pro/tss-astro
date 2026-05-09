@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from '@tanstack/solid-query'
 import { getUntypedClient } from '@trpc/client'
 import { createTRPCOptionsProxy } from '@trpc/tanstack-solid-query'
-import { createSignal, For, Match, Show, Switch } from 'solid-js'
+import { createSignal, For, Match, Switch } from 'solid-js'
 
 import type { AppRouter } from '@/lib/trpc/routes'
 
-import { queryClient, trpcClient } from '@/lib/trpc/client'
+import { trpcClient, queryClient } from '@/lib/trpc/client'
 
 const trpc = createTRPCOptionsProxy<AppRouter>({
   client: getUntypedClient(trpcClient),
@@ -13,7 +13,10 @@ const trpc = createTRPCOptionsProxy<AppRouter>({
 })
 
 export default function TrpcQueryDemo() {
-  const usersQuery = useQuery(trpc.userList.queryOptions, queryClient)
+  const usersQuery = useQuery(
+    () => trpc.userList.queryOptions(),
+    () => queryClient,
+  )
 
   const [name, setName] = createSignal('Server')
   const helloQuery = useQuery(
@@ -21,13 +24,13 @@ export default function TrpcQueryDemo() {
       trpc.hello.queryOptions(name(), {
         networkMode: 'offlineFirst',
       }),
-    queryClient,
+    () => queryClient,
   )
 
-  const [createUserName, setCreateUserName] = createSignal('')
+  const [createUserName, setCreateUserName] = createSignal('New object')
   const createUserMutation = useMutation(
     trpc.createUser.mutationOptions,
-    queryClient,
+    () => queryClient,
   )
 
   return (
@@ -40,6 +43,7 @@ export default function TrpcQueryDemo() {
           </p>
         </header>
         <input
+          class="border border-gray-300 rounded-md p-2"
           type="text"
           value={name()}
           onInput={(e) => setName(e.target.value)}
@@ -67,7 +71,7 @@ export default function TrpcQueryDemo() {
             <p>Loading...</p>
           </Match>
           <Match when={usersQuery.isError}>
-            <p>Error: {usersQuery.error.message}</p>
+            <p>Error: {usersQuery.error!.message}</p>
           </Match>
           <Match when={usersQuery.isSuccess}>
             <For each={usersQuery.data}>
@@ -85,28 +89,35 @@ export default function TrpcQueryDemo() {
       <div class="card flex flex-col gap-2">
         <header>
           <h3>Mutation</h3>
-          <p class="text-light">Returns a new user object</p>
+          <p class="text-light">
+            Returns a new user object with complex object
+          </p>
         </header>
         <Switch>
-          <Match when={createUserMutation.isLoading}>
+          <Match when={createUserMutation.status === 'pending'}>
             <p>Loading...</p>
           </Match>
           <Match when={createUserMutation.isError}>
-            <p>Error: {createUserMutation.error.message}</p>
+            <p>Error: {createUserMutation.error!.message}</p>
           </Match>
           <Match when={createUserMutation.isSuccess}>
-            <p>User created: {createUserMutation.data.name}</p>
+            <p>Object name: {createUserMutation.data!.name}</p>
+            <p>Today day: {createUserMutation.data?.today.getDay()}</p>
+            <pre>{JSON.stringify(createUserMutation.data, null, 2)}</pre>
           </Match>
         </Switch>
         <input
           type="text"
+          class="border border-gray-300 rounded-md p-2"
           value={createUserName()}
           onInput={(e) => setCreateUserName(e.target.value)}
         />
         <footer>
           <button
             type="button"
-            onClick={() => createUserMutation.mutate({ name: name() })}
+            onClick={() =>
+              createUserMutation.mutate({ name: createUserName() })
+            }
           >
             Create User
           </button>
