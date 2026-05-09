@@ -29,7 +29,7 @@
         "oxlint": "^1.63.0",
       },
     },
-    "tanstack-solid-query": {
+    "@trpc-tanstack-solid-query": {
       "name": "@trpc/tanstack-solid-query",
       "version": "11.17.0",
       "devDependencies": {
@@ -547,7 +547,7 @@
 
     "@trpc/server": ["@trpc/server@11.17.0", "", { "peerDependencies": { "typescript": ">=5.7.2" }, "bin": { "intent": "bin/intent.js" } }, "sha512-jbAOUe0PpUTCYqziyu+8vYXZdDXPudZgnEhWCQ2NjKnVEjfE93RqHTt1oycZJv/HNf51YlRXfEEwSIAbb161rw=="],
 
-    "@trpc/tanstack-solid-query": ["@trpc/tanstack-solid-query@workspace:tanstack-solid-query"],
+    "@trpc/tanstack-solid-query": ["@trpc/tanstack-solid-query@workspace:@trpc-tanstack-solid-query"],
 
     "@tybys/wasm-util": ["@tybys/wasm-util@0.10.2", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg=="],
 

@@ -4,8 +4,7 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "@tanstack-solid-query": ["./tanstack-solid-query/src/*"]
+      "@/*": ["./src/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "solid-js"

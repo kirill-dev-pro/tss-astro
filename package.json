@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "workspaces": [
-    "tanstack-solid-query"
+    "@trpc-tanstack-solid-query"
   ],
   "type": "module",
   "scripts": {
